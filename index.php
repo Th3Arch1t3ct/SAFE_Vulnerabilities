@@ -9,6 +9,14 @@ if(isset($_POST['username']) && isset($_POST['password'])){
     $result = $pdo->prepare('SELECT password FROM users WHERE uname = ?');
     $result->execute(array($_POST['username']));
     $data = $result->fetch();
+
+    if(1){
+
+    } else {
+        $error = 'incorrect username or password';
+    }
+} else {
+    $error = 'username or password not set';
 }
 
 ?>
@@ -27,6 +35,7 @@ if(isset($_POST['username']) && isset($_POST['password'])){
                 <p>Username: </p><input type="text" name="username"/>
                 <p>Password: </p><input type="password" name="password"/>
             </form>
+            <p style="color:red;"><?php echo $error; ?></p>
         </p>
     </div>
 </body>
