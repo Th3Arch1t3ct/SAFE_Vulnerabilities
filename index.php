@@ -1,3 +1,11 @@
+<?php
+
+$path = 'sqlite:./users.db';
+
+$pdo = new PDO($path)
+
+?>
+
 <!DOCTYPE html>
 <html>
 <head>
