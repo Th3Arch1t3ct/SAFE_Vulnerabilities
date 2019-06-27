@@ -10,8 +10,8 @@ if(isset($_POST['username']) && isset($_POST['password'])){
     $result->execute(array($_POST['username']));
     $data = $result->fetch();
 
-    if(1){
-
+    if($_POST['password'] == $data['password']){
+        $error = "Successfully authenticated!";
     } else {
         $error = 'incorrect username or password';
     }
