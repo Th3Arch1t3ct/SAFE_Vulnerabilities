@@ -2,7 +2,14 @@
 
 $path = 'sqlite:./users.db';
 
-$pdo = new PDO($path)
+$pdo = new PDO($path);
+
+if(isset($_POST['username']) && isset($_POST['password'])){
+    // Need to do authentication
+    $result = $pdo->prepare('SELECT password FROM users WHERE uname = ?');
+    $result->execute(array($_POST['username']));
+    $data = $result->fetch();
+}
 
 ?>
 
